@@ -3,20 +3,25 @@
     <div class="col-md-4">
       <h2>Add User</h2>
       <hr>
-      <Form>
+      <form #form='ngForm'>
+        <div class="form-group">
+          <label for="id">Id</label>
+          <input type="text" name="id" class="form-control" #id ngModel required>
+        </div>
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" name="name" class="form-control">
+          <input type="text" name="name" class="form-control" #name ngModel required>
         </div>
         <div class="form-group">
           <label for="technology">Technology</label>
-          <input type="text" name="technology" class="form-control">
+          <input type="text" name="technology" class="form-control" #technology ngModel required>
         </div>
 
-        <button class="btn btn-primary mr-2">Add User</button>
-        <button class="btn btn-success mr-2">Save User</button>
-        <button class="btn btn-warning mr-2">Fetch User</button>
-      </Form>
+        <button class="btn btn-primary mr-2" [disabled]='!form.valid' [ngClass]="{'not-allowed': !form.valid}" (click)='onAddUser(id.value,name.value,technology.value)' type="button">{{editMode ? 'Update User' : 'Add User'}}</button>
+        <button class="btn btn-success mr-2"  type="button" (click)="onSaveUser()">Save User</button>
+        <button class="btn btn-warning mr-2" type="button" (click)="onFetchUser()">Fetch User</button>
+      </form>
+      
     </div>
     <div class="col-md-6 offset-1">
       <h2>User Details</h2>
@@ -25,21 +30,30 @@
         <thead>
           <tr>
             <th scope="col">Sr.No</th>
+            <th scope="col">Id</th>
             <th scope="col">Name</th>
             <th scope="col">Technology</th>
             <th scope="col">Edit</th>
             <th scope="col">Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf='!isfetching'>
           <tr *ngFor = 'let detail of users; let i=index'>
             <td>{{i+1}}</td>
+            <td>{{detail.id}}</td>
             <td>{{detail.name}}</td>
             <td>{{detail.technology}}</td>
-            <td><i class="far fa-edit"></i></td>
-            <td><i class="far fa-trash-alt"></i></td>
+            <td><i class="far fa-edit" (click)='onEdit(i)'></i></td>
+            <td><i class="far fa-trash-alt" (click)='onDelete(i)'></i></td>
           </tr>
         </tbody>
+        <tr *ngIf="isfetching">
+          <td colspan="6" class="text-center" >
+            <div class="spinner-border text-warning" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </td>
+        </tr>
       </table>
     </div>
   </div>

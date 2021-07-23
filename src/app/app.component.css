@@ -2,3 +2,7 @@ i{
     cursor: pointer;    
     color:rgba(255, 40, 40, 0.808)
 }
+
+.not-allowed{
+    cursor: not-allowed;
+}
