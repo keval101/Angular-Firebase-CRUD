@@ -17,7 +17,7 @@
           <input type="text" name="technology" class="form-control" #technology ngModel required>
         </div>
 
-        <button class="btn btn-primary mr-2" [disabled]='!form.valid' [ngClass]="{'not-allowed': !form.valid}" (click)='onAddUser(id.value,name.value,technology.value)' type="button">{{editMode ? 'Update User' : 'Add User'}}</button>
+        <button class="btn btn-primary mr-2" [disabled]='!form.valid && !editMode' [ngClass]="{'not-allowed': !form.valid && !editMode}" (click)='onAddUser(id.value,name.value,technology.value)' type="button">{{editMode ? 'Update User' : 'Add User'}}</button>
         <button class="btn btn-success mr-2"  type="button" (click)="onSaveUser()">Save User</button>
         <button class="btn btn-warning mr-2" type="button" (click)="onFetchUser()">Fetch User</button>
       </form>
